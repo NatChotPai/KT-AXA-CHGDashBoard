@@ -1,0 +1,13 @@
+.item{
+    color:blue;
+    text-align: center;
+    list-style-type: none;
+}
+
+.expense{
+    border-right:  3px solid red;
+}
+
+.income{
+    border-right:  3px solid greenyellow;
+}
