@@ -6,6 +6,7 @@ import { useState,useEffect,useReducer} from 'react'
 import DataContext from './data/DataContext';
 import ReportComponent from './components/ReportComponent';
 //import { element } from 'prop-types';
+import {BrowserRouter as Router,Routes,Route,Link} from "react-router-dom";
 
 function App() {
 
@@ -31,8 +32,8 @@ function App() {
     const income = amounts.filter(element=>element>0).reduce((total,element)=>total+=element,0)
     const expense = (amounts.filter(element=>element<0).reduce((total,element)=>total+=element,0))*-1
 
-    console.log("รายได้ = ", income);
-    console.log("รายจ่าย = ", expense);
+    console.log("รายได้ = ", income.toFixed(2));
+    console.log("รายจ่าย = ", expense.toFixed(2));
 
     setReportIncome(income)
     setReportExpense(expense)
@@ -47,41 +48,59 @@ function App() {
   }
 
   //useReducer
-  const [showReport,setShowReport] = useState(false)
-  //การเงื่อนไข useReducer
-  const reducer = (state,action)=>{
-      switch(action.type){
-        case  "SHOW" :
-          return setShowReport(true)
-        case  "HIDE" :
-          return setShowReport(false)
-        // case  "ADD" :
-        //   return state+action.payload
-        // case  "SUB" :
-        //   return state-action.payload
-      }
-  }
-  //การเรียกใช้ useReducer
-  const [result,dispatch] = useReducer(reducer,showReport)
+  // const [showReport,setShowReport] = useState(false)
+  // //การเงื่อนไข useReducer
+  // const reducer = (state,action)=>{
+  //     switch(action.type){
+  //       case  "SHOW" :
+  //         return setShowReport(true)
+  //       case  "HIDE" :
+  //         return setShowReport(false)
+  //       // case  "ADD" :
+  //       //   return state+action.payload
+  //       // case  "SUB" :
+  //       //   return state-action.payload
+  //     }
+  // }
+  // //การเรียกใช้ useReducer
+  // const [result,dispatch] = useReducer(reducer,showReport)
 
   return (
-    <DataContext.Provider value={
-      {
-        income : reportIncome,
-        expense : reportExpense 
-      }}>
+    <DataContext.Provider value={{ income : reportIncome,expense : reportExpense }}>
       <div className='container'>
         <Logo/>
         <Title/>
-        <FormComponent onAddItem={onAddNewItem}/>
-        <Transaction items ={items}/>
-        {showReport && <ReportComponent/>}
+        <Router>
+            <div>
+              <ul className="horizontal-menu">
+                <li> <Link to="/">ข้อมูลบัญชี</Link> </li>
+                <li> <Link to="/insert">บันทึกข้อมูล</Link> </li>
+              </ul>
+              <Routes>
+                  <Route path="/insert" element={<> <FormComponent onAddItem={onAddNewItem}/> <Transaction items={items}/> </>} />
+                  <Route path="/" element={<ReportComponent/>} />
+              </Routes>
+
+              {/* <Switch>
+                <Route path="/">
+                    <ReportComponent/>
+                </Route>
+                <Route path="/insert">
+                    <FormComponent onAddItem={onAddNewItem}/>
+                    <Transaction items ={items}/>
+                </Route>
+              </Switch> */}
+            </div>
+        </Router>
+        {/* <FormComponent onAddItem={onAddNewItem}/>
+        <Transaction items ={items}/> */}
+        {/* {showReport && <ReportComponent/>} */}
         {/* <ReportComponent/> */}
-        <h1>{result}</h1>
+        {/* <h1>{result}</h1> */}
         {/* <button onClick={()=>dispatch({type:"ADD",payload:10})}>แสดง</button>
         <button onClick={()=>dispatch({type:"SUB",payload:5})}>ซ่อน</button> */}
-        <button onClick={()=>dispatch({type:"SHOW"})}>แสดง</button>
-        <button onClick={()=>dispatch({type:"HIDE"})}>ซ่อน</button>
+        {/* <button onClick={()=>dispatch({type:"SHOW"})}>แสดง</button>
+        <button onClick={()=>dispatch({type:"HIDE"})}>ซ่อน</button> */}
       </div>
     </DataContext.Provider>
   );
