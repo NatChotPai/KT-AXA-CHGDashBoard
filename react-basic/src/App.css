@@ -3,7 +3,7 @@
   font-family: 'Prompt', sans-serif;
 }
 
-  @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
 
 
 body{
@@ -14,11 +14,15 @@ body{
   justify-content: center;
   min-height: 100vh;
   margin: 0;
+  background: -webkit-linear-gradient(45deg, #49a09d, #5f2c82);
+  background: linear-gradient(45deg, #49a09d, #5f2c82);
+  font-weight: 100;
 }
 
 .container{
   margin: 30px auto;
   width: 350px;
+  width: auto;
 }
 
 .App {

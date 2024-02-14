@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import Transaction from './components/Transaction';
 import FormComponent from './components/FormComponent';
 import { useState,useEffect,useReducer} from 'react'
 import DataContext from './data/DataContext';
 import ReportComponent from './components/ReportComponent';
-//import { element } from 'prop-types';
 import {BrowserRouter as Router,Routes,Route,Link} from "react-router-dom";
 
 function App() {
 
-  const Logo =()=> <img src={logo} className="App-logo" alt="logo"/>
-  const Title =()=> <h1 style={{color:"red", textAlign:"center", fontSize:'1.5rem'}}>โปรแกรมบัญชีรายรับ - รายจ่าย</h1>
+  //const Logo =()=> <img src={logo} className="App-logo" alt="logo"/>
+  const Title =()=> <h1 style={{color:"red", textAlign:"center", fontSize:'1.5rem'}}>Change Management System</h1>
   // 1. init Array Data
   const initData =[
-    {id:1,title:"ค่ารักษาพยาบาล" ,amount:-2000},
-    {id:2,title:"ค่าน้ำมัน" ,amount:-2000},
-    {id:3,title:"ค่าเช่าบ้าน" ,amount:-2000},
-    {id:4,title:"เงินเดือน" ,amount:70000} 
+    // {id:1,title:"ค่ารักษาพยาบาล" ,amount:-2000},
+    // {id:2,title:"ค่าน้ำมัน" ,amount:-2000},
+    // {id:3,title:"ค่าเช่าบ้าน" ,amount:-2000},
+    // {id:4,title:"เงินเดือน" ,amount:70000},
+
+    {id:1,chgnumber:"CHG1243590",assignedto:"Chaiyaporn SRISOI",assignmentgroup:"Application Support_L1_KAL",businessservice:"VDI",acceleratedchange:"FALSE",shortdescription:"VDI Storage Refreshment at NTT",type:"Normal",state:"Work in Progress",plannedstartdate:"2024-02-09 22:00:00"},
+    {id:2,chgnumber:"CHG1246118",assignedto:"Vatchapol JITTIPATTANAKULCHAI",assignmentgroup:"BPMS Support_L3_KAL",businessservice:"BPMS",acceleratedchange:"TRUE",shortdescription:"Enable dynatrace",type:"Normal",state:"Accepted",plannedstartdate:"2024-02-09 20:00:00"},
+    {id:3,chgnumber:"CHG1238426",assignedto:"Kannatthawat WATTANAAMORN",assignmentgroup:"Application Support_L2_KAL",businessservice:"iDoc",acceleratedchange:"FALSE",shortdescription:"[iDocument] : MRTA E-Policy",type:"Normal",state:"Closed Skipped",plannedstartdate:"2024-02-09 20:00:00"},
+    {id:4,chgnumber:"CHG1240600",assignedto:"Vatchapol JITTIPATTANAKULCHAI",assignmentgroup:"BPMS Support_L3_KAL",businessservice:"BPMS",acceleratedchange:"FALSE",shortdescription:"Start - Stop All Services in sequences Jenkins jobs",type:"Normal",state:"Work in Progress",plannedstartdate:"2024-02-08 22:00:00"}
   ]
 
   const [reportIncome,setReportIncome] = useState(0)
@@ -27,48 +31,29 @@ function App() {
   const [items,setItems] = useState(initData)
   // const [items,setItems] = useState([])
   
-  useEffect(()=>{
-    const amounts = items.map(items=>items.amount)
-    const income = amounts.filter(element=>element>0).reduce((total,element)=>total+=element,0)
-    const expense = (amounts.filter(element=>element<0).reduce((total,element)=>total+=element,0))*-1
+  // useEffect(()=>{
+  //   const amounts = items.map(items=>items.amount)
+  //   const income = amounts.filter(element=>element>0).reduce((total,element)=>total+=element,0)
+  //   const expense = (amounts.filter(element=>element<0).reduce((total,element)=>total+=element,0))*-1
 
-    console.log("รายได้ = ", income.toFixed(2));
-    console.log("รายจ่าย = ", expense.toFixed(2));
+  //   console.log("รายได้ = ", income.toFixed(2));
+  //   console.log("รายจ่าย = ", expense.toFixed(2));
 
-    setReportIncome(income)
-    setReportExpense(expense)
-  },[items,reportIncome,reportExpense])
+  //   setReportIncome(income)
+  //   setReportExpense(expense)
+  // },[items,reportIncome,reportExpense])
 
   // 2. AddNewItem stageItem 
   const onAddNewItem = (newItem)=>{
     setItems((prevItem)=>{
       return [newItem,...prevItem]
-      // return [...prevItem,newItem]
     })
   }
-
-  //useReducer
-  // const [showReport,setShowReport] = useState(false)
-  // //การเงื่อนไข useReducer
-  // const reducer = (state,action)=>{
-  //     switch(action.type){
-  //       case  "SHOW" :
-  //         return setShowReport(true)
-  //       case  "HIDE" :
-  //         return setShowReport(false)
-  //       // case  "ADD" :
-  //       //   return state+action.payload
-  //       // case  "SUB" :
-  //       //   return state-action.payload
-  //     }
-  // }
-  // //การเรียกใช้ useReducer
-  // const [result,dispatch] = useReducer(reducer,showReport)
 
   return (
     <DataContext.Provider value={{ income : reportIncome,expense : reportExpense }}>
       <div className='container'>
-        <Logo/>
+        {/* <Logo/> */}
         <Title/>
         <Router>
             <div>
@@ -80,27 +65,8 @@ function App() {
                   <Route path="/insert" element={<> <FormComponent onAddItem={onAddNewItem}/> <Transaction items={items}/> </>} />
                   <Route path="/" element={<ReportComponent/>} />
               </Routes>
-
-              {/* <Switch>
-                <Route path="/">
-                    <ReportComponent/>
-                </Route>
-                <Route path="/insert">
-                    <FormComponent onAddItem={onAddNewItem}/>
-                    <Transaction items ={items}/>
-                </Route>
-              </Switch> */}
             </div>
         </Router>
-        {/* <FormComponent onAddItem={onAddNewItem}/>
-        <Transaction items ={items}/> */}
-        {/* {showReport && <ReportComponent/>} */}
-        {/* <ReportComponent/> */}
-        {/* <h1>{result}</h1> */}
-        {/* <button onClick={()=>dispatch({type:"ADD",payload:10})}>แสดง</button>
-        <button onClick={()=>dispatch({type:"SUB",payload:5})}>ซ่อน</button> */}
-        {/* <button onClick={()=>dispatch({type:"SHOW"})}>แสดง</button>
-        <button onClick={()=>dispatch({type:"HIDE"})}>ซ่อน</button> */}
       </div>
     </DataContext.Provider>
   );

@@ -1,32 +1,50 @@
 import Proptypes from 'prop-types';
 import './Item.css'
-// import DataContext from '../data/DataContext';
 
 const Item =(props)=> {
-    const {title,amount} = props
-    const status = amount < 0 ? "expense":"income"
-    const symbro = amount < 0 ? "-":"+"
+    const {chgnumber,assignedto,assignmentgroup,businessservice,acceleratedchange,shortdescription,type,state,plannedstartdate} = props
+    
+    // const status = amount < 0 ? "expense":"income"
+    // const symbro = amount < 0 ? "-":"+"
 
     //ฟังก์ชั่นแปลงรูปแบบตัวเลข
-    const formatNumber=(num)=> {
-        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-    }
+    // const formatNumber=(num)=> {
+    //     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    // }
 
     return(
-        <li className={status}> {title}  <span>{symbro}{ formatNumber(Math.abs(amount).toFixed(2)) }</span> 
+        // <li className={status}> {title}  <span>{symbro}{ formatNumber(Math.abs(amount).toFixed(2)) }</span> </li>
+
         
-        {/* solution 1 Global context */}
-        {/* <DataContext.Consumer>
-            {value=><p>{value}</p>}
-        </DataContext.Consumer> */}
-        </li>
+        <div>
+            <li> {chgnumber} | {assignedto} | {assignmentgroup} | {businessservice} | {acceleratedchange} | {shortdescription} | {type} | {state} | {plannedstartdate}</li>
         
+            
+                {/* <tr>
+                    <td>{chgnumber}</td>
+                    <td>{assignedto}</td>
+                    <td>{assignmentgroup}</td>
+                    <td>{businessservice} </td>
+                    <td>{acceleratedchange}</td>
+                    <td>{shortdescription}</td>
+                    <td>{type}</td>
+                    <td>{state}</td>
+                    <td>{plannedstartdate}</td>
+                </tr> */}
+        </div>
     )
 } 
 
 Item.propTypes={
-    title:Proptypes.string.isRequired,
-    amount:Proptypes.number
+    chgnumber:Proptypes.string,
+    assignedto:Proptypes.string,
+    assignmentgroup:Proptypes.string,
+    businessservice:Proptypes.string,
+    acceleratedchange:Proptypes.string,
+    shortdescription:Proptypes.string,
+    type:Proptypes.string,
+    state:Proptypes.string,
+    plannedstartdate:Proptypes.string,
 }
 
 export default Item

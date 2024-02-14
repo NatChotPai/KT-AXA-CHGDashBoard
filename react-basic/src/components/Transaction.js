@@ -1,38 +1,100 @@
+import * as React from "react";
+import { useTable } from "react-table";
 import Item from "./Item";
 import './Transaction.css'
-// import DataContext from "../data/DataContext";
-// import { useContext } from 'react'
+import fakeData from "./MOCK_DATA.json";
+
 
 const Transaction =(props)=> {
-    //Array Data
-    const {items} = props 
-    /* solution 2 Global context */
-    // const name = useContext(DataContext)
-    return(
-      <div>
-        <ul className="item-list">
-            {/* Array Map */}
-            {items.map((element)=>{
-                return <Item title={element.title} amount={element.amount} key = {element.id}/>
-            })}
 
-          {/* <Item title={data[0].title} amount={data[0].amount}/>
-          <Item title={data[1].title} amount={data[1].amount}/>
-          <Item title={data[2].title} amount={data[2].amount}/>
-          <Item title={data[3].title} amount={data[3].amount}/>
-          <Item title={data[4].title} amount={data[4].amount}/> */}
-        </ul>
+  const data = React.useMemo(() => fakeData, []);
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "ID",
+        accessor: "id",
+      },
+      {
+        Header: "First Name",
+        accessor: "first_name",
+      },
+      {
+        Header: "Last Name",
+        accessor: "last_name",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+      },
+      {
+        Header: "Gender",
+        accessor: "gender",
+      },
+      {
+        Header: "University",
+        accessor: "university",
+      },
+    ],
+    []
+    );
 
-        {/* solution 1 Global context */}
-        {/* <DataContext.Consumer>
-            {value=><p>{value}</p>}
-        </DataContext.Consumer> */}
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
 
-        {/* solution 2 Global context by useContext */}
-        {/* {name} */}
-
+    return (
+      <div className="App">
+        <div className="tablecontainer">
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()}>
+                      {column.render("Header")}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()}> {cell.render("Cell")} </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
-    )
+    );
+
+    //Array Data
+    // const {items} = props 
+    // return(
+    //   <div>
+    //     <ul className="item-list">
+    //         {/* Array Map */}
+    //         {items.map((element)=>{
+    //             return <Item key = {element.id}
+    //                          chgnumber={element.chgnumber} 
+    //                          assignedto={element.assignedto} 
+    //                          assignmentgroup = {element.assignmentgroup} 
+    //                          businessservice = {element.businessservice} 
+    //                          acceleratedchange = {element.acceleratedchange} 
+    //                          shortdescription = {element.shortdescription} 
+    //                          type = {element.type} 
+    //                          state = {element.state} 
+    //                          plannedstartdate = {element.plannedstartdate} 
+    //                     />
+    //         })}
+    //     </ul>
+    //   </div>
+    // )
 }
 
 export default Transaction
+

@@ -25,16 +25,6 @@ const ReportComponent=()=>{
                     <p className="report minus">฿{formatNumber(expense)} </p> 
                 </div>
             </div>
-
-            {/* สวัสดี : {name} */}
-
-            {/* solution 1 DataContext.Consume
-            <DataContext.Consumer>
-                {context=> <p> รายรับ :{context.income} รายจ่าย :{context.expense} </p> }
-            </DataContext.Consumer> */}
-            
-            {/* solution 2 DataContext by useContext */}
-            {/* {income} */}
         </div>
     )
 }
