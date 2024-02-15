@@ -62,7 +62,9 @@ function App() {
                 <li> <Link to="/insert">บันทึกข้อมูล</Link> </li>
               </ul>
               <Routes>
-                  <Route path="/insert" element={<> <FormComponent onAddItem={onAddNewItem}/> <Transaction items={items}/> </>} />
+                  <Route path="/insert" element={<> <FormComponent onAddItem={onAddNewItem}/> 
+                                                      {/* <Transaction items={items}/> */}
+                                                 </>} />
                   <Route path="/" element={<ReportComponent/>} />
               </Routes>
             </div>

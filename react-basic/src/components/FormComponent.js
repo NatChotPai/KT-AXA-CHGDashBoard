@@ -1,6 +1,7 @@
 import './FormComponent.css'
 import { useState,useEffect} from 'react'
 import {v4 as uuidv4} from 'uuid';
+import Transaction from './Transaction';
 
 const FormComponent = (props)=>{
     // console.log("Render Form component")
@@ -109,6 +110,8 @@ const FormComponent = (props)=>{
                     {/* disabled={!fromValid} */}
                 </div>
             </form>
+            {/* <Transaction /> */}
+            {/* <Transaction items={items}/> */}
         </div>
     )
 }
